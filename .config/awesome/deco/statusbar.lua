@@ -1,6 +1,6 @@
 -- Standard awesome library
 local gears = require("gears")
-local awful     = require("awful")
+local awful = require("awful")
 
 -- Wibox handling library
 local wibox = require("wibox")
@@ -40,40 +40,46 @@ awful.screen.connect_for_each_screen(function(s)
     awful.button({ }, 5, function () awful.layout.inc(-1) end)
   ))
 
-  -- Create a taglist widget
-  s.mytaglist = awful.widget.taglist {
-    screen  = s,
-    filter  = awful.widget.taglist.filter.all,
-    buttons = taglist_buttons
-  }
+  local fancy_taglist = require("deco.fancy_taglist")
+    s.mytaglist = fancy_taglist.new({
+        screen = s,
+        taglist = { buttons = taglist_buttons },
+        tasklist = { buttons = tasklist_buttons },
+        filter = awful.widget.taglist.filter.all,
+    })
 
-  -- Create a tasklist widget
-  s.mytasklist = awful.widget.tasklist {
-    screen  = s,
-    filter  = awful.widget.tasklist.filter.currenttags,
-    buttons = tasklist_buttons
-  }
+  local slidebar = require("deco.slidebar")
 
-  -- Create the wibox
-  s.mywibox = awful.wibar({ position = "top", screen = s })
-
-  -- Add widgets to the wibox
-  s.mywibox:setup {
-    layout = wibox.layout.align.horizontal,
-    { -- Left widgets
-      layout = wibox.layout.fixed.horizontal,
-      RC.launcher,
-      s.mytaglist,
-      s.mypromptbox,
-    },
-    s.mytasklist, -- Middle widget
-    { -- Right widgets
-      layout = wibox.layout.fixed.horizontal,
-      mykeyboardlayout,
-      wibox.widget.systray(),
-      mytextclock,
-      s.mylayoutbox,
-    },
-  }
+    -- Create myslidebar instead of 'mywibox'
+    s.myslidebar = slidebar {
+    	screen = s,
+      bg = "#00000040",
+    -- position = "top",
+      size = 30,
+    -- size_activator = 1
+    -- show_delay = 0.25,
+    -- hide_delay = 0.5,
+    -- easing = 2,
+    -- delta = 1,
+	}
+        
+    -- Add widgets to the slidebar
+    s.myslidebar:setup {
+        layout = wibox.layout.align.horizontal,
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+            RC.launcher,
+            s.mytaglist,
+            s.mypromptbox,
+        },
+        s.mytasklist, -- Middle widget
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            mykeyboardlayout,
+            wibox.widget.systray(),
+            mytextclock,
+            --s.mylayoutbox,
+        },
+    }
 end)
 -- }}}

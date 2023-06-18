@@ -18,9 +18,12 @@ RC.vars = require("main.user-variables")
 -- {{{ Error handling -- }}}
 require("main.error-handling")
 
+local home = os.getenv("HOME")
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+--beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init("~/.config/awesome/deco/theme.lua")
 beautiful.wallpaper = RC.vars.wallpaper
 -- }}}
 
@@ -62,7 +65,7 @@ RC.mainmenu = awful.menu({ items = main.menu() }) -- in globalkeys
 
 -- a variable needed in statusbar (helper)
 RC.launcher = awful.widget.launcher(
-  { image = beautiful.awesome_icon, menu = RC.mainmenu }
+  { image = home .. "/.icons/kali.png", menu = RC.mainmenu }
 )
 
 -- Menubar configuration
