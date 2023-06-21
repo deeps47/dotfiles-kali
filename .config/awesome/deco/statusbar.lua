@@ -17,6 +17,8 @@ local tasklist_buttons = deco.tasklist()
 
 local _M = {}
 
+--spacer
+local separator = wibox.widget.textbox(" ")
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- {{{ Wibar
@@ -62,7 +64,14 @@ awful.screen.connect_for_each_screen(function(s)
     -- easing = 2,
     -- delta = 1,
 	}
-        
+  
+  local logout_menu_widget = require("widgets.logout-menu-widget.logout-menu")
+  local batteryarc_widget = require("widgets.batteryarc-widget.batteryarc")
+  local volume_widget = require('widgets.volume-widget.volume')
+  local todo_widget = require("widgets.todo-widget.todo")
+
+
+
     -- Add widgets to the slidebar
     s.myslidebar:setup {
         layout = wibox.layout.align.horizontal,
@@ -75,9 +84,17 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            todo_widget(),
+            separator,
+            --mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+            separator,
+            volume_widget{widget_type = 'arc'},
+            separator,
+            batteryarc_widget(),
+            separator,
+            logout_menu_widget(),
             --s.mylayoutbox,
         },
     }
