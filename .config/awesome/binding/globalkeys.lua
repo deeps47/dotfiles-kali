@@ -109,8 +109,8 @@ function _M.get()
 
     --   -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
+    --awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+    --          {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -123,6 +123,18 @@ function _M.get()
               end,
               {description = "lua execute prompt", group = "awesome"}),
 
+
+    --Rofi
+    awful.key({ modkey },    "r",     function () awful.spawn("rofi -show drun") end,
+          {description = "rofi launcher", group = "launcher"}),
+
+    --Rofi-emoji
+    awful.key({ modkey },    ",",     function () awful.spawn("rofi -show emoji") end,
+          {description = "rofi emoji", group = "launcher"}),
+
+
+
+    
     --   -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     -- Resize
     --awful.key({ modkey, "Control" }, "Left",  function () awful.client.moveresize( 20,  20, -40, -40) end),
